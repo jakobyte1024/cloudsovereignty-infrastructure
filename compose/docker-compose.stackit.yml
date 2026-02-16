@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   postgres:
     image: postgres:18
@@ -80,29 +82,22 @@ services:
       timeout: 5s
       retries: 100
 
-  vault:
-    image: hashicorp/vault:latest
-    container_name: vault
-    cap_add:
-      - IPC_LOCK
-    ports:
-      - "8200:8200"
-    command: "server -dev -dev-root-token-id=myroot -dev-listen-address=0.0.0.0:8200"
-    networks:
-      - cloudsovereignty
-
   encryptionproxy:
     build:
       context: ../../cloudsovereignty-encryptionproxy
       dockerfile: Dockerfile
     environment:
-      ENCRYPTION_PROVIDERS__VAULT__TYPE: VaultTransit
-      ENCRYPTION_PROVIDERS__VAULT__PARAMS__ENDPOINT: http://vault:8200/v1/transit
-      ENCRYPTION_PROVIDERS__VAULT__PARAMS__TOKEN: myroot
+      ENCRYPTION_PROVIDERS__STACKIT__TYPE: StackitKms
+      ENCRYPTION_PROVIDERS__STACKIT__PARAMS__PROJECTID: ${STACKIT_PROJECT}
+      ENCRYPTION_PROVIDERS__STACKIT__PARAMS__REGIONID: ${STACKIT_REGION}
+      ENCRYPTION_PROVIDERS__STACKIT__PARAMS__KEYRINGID: ${STACKIT_KEYRING}
+      ENCRYPTION_PROVIDERS__STACKIT__PARAMS__SERVICEACCOUNT: /run/secrets/service-account
     ports:
       - "8201:8080"
     networks:
       - cloudsovereignty
+    secrets:
+      - service-account
 
   manufacture-domain:
     build:
@@ -129,6 +124,8 @@ services:
       ENCRYPTIONPROXY_URL_ENCRYPT: http://encryptionproxy:8080/api/v1/encrypt
       ENCRYPTIONPROXY_URL_DECRYPT: http://encryptionproxy:8080/api/v1/decrypt
       ENCRYPTIONPROXY_SECRET: demo
+      KEK_PROVIDER_BOM: ${MANUFACTURE_ENCRYPTION_PROVIDER_BOM}
+      KEK_KEYNAME_BOM: ${MANUFACTURE_ENCRYPTION_KEYNAME_BOM}
     networks:
       - cloudsovereignty
     healthcheck:
@@ -136,39 +133,44 @@ services:
       interval: 20s
       timeout: 5s
       retries: 100
-#  showcase-driver:
-#    build:
-#      context: ../../cloudsovereignty-driver
-#      dockerfile: Dockerfile
-#    entrypoint: ./single.sh
-#    depends_on:
-#      supplier-domain:
-#        condition: service_healthy
-#      order-domain:
-#        condition: service_healthy
-#      manufacture-domain:
-#        condition: service_healthy
-#    environment:
-#      - GATLING_BASEURL_SUPPLIERDOMAIN=http://supplier-domain:9080
-#      - GATLING_BASEURL_ORDERDOMAIN=http://order-domain:9080
-#      - GATLING_BASEURL_MANUFACTUREDOMAIN=http://manufacture-domain:9080
-#      - GATLING_NR_USERS=1
-#      - GATLING_MAX_DURATION=1
-#      - GATLING_RAMPUP_TIME=10
-#      - GATLING_NR_USERS_AT_ONCE=0
-#    volumes:
-#      - ./results:/build/target/gatling
-#    ulimits:
-#      nproc: 65535
-#      nofile:
-#        soft: 65535
-#        hard: 65535
-#    networks:
-#      - cloudsovereignty
-      
+
+  showcase-driver:
+    build:
+      context: ../../cloudsovereignty-driver
+      dockerfile: Dockerfile
+    entrypoint: ./single.sh
+    depends_on:
+      supplier-domain:
+        condition: service_healthy
+      order-domain:
+        condition: service_healthy
+      manufacture-domain:
+        condition: service_healthy
+    environment:
+      - GATLING_BASEURL_SUPPLIERDOMAIN=http://supplier-domain:9080
+      - GATLING_BASEURL_ORDERDOMAIN=http://order-domain:9080
+      - GATLING_BASEURL_MANUFACTUREDOMAIN=http://manufacture-domain:9080
+      - GATLING_NR_USERS=1
+      - GATLING_MAX_DURATION=1
+      - GATLING_RAMPUP_TIME=10
+      - GATLING_NR_USERS_AT_ONCE=0
+    volumes:
+      - ./results:/build/target/gatling
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 65535
+        hard: 65535
+    networks:
+      - cloudsovereignty
+
 networks:
   cloudsovereignty:
     driver: bridge
 
 volumes:
   postgres_data:
+
+secrets:
+  service-account:
+    file: ../sa-key.json

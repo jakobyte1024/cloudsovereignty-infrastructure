@@ -4,6 +4,9 @@ sa-key-*
 *.tfstate.*
 *.tfstate.backup
 .env
+.env.*
+!.env.*.example
+!.env.example
 compose/results
 argocd-install.yaml
 kubeconfig.yaml

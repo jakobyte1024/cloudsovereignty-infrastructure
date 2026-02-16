@@ -1,5 +1,5 @@
 provider "stackit" {
-    service_account_key_path = "${path.module}/../sa-key.json"
+    service_account_key_path = "${path.module}/../../sa-key.json"
 }
 
 module "database" {
