@@ -10,4 +10,5 @@ sa-key-*
 compose/results
 argocd-install.yaml
 kubeconfig.yaml
+kubeconfig*.yaml
 **/.terraform/**/*

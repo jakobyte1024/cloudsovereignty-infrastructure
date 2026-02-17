@@ -58,6 +58,11 @@ cloudsovereignty-supplierdomain/
 3. Access the services using the URLs provided above.
 
 ### Terraform
+This repository includes two different deployments.
+
+1. A full-cloud deployment to STACKIT using the STACKIT KMS for Column-Level-Encryption inside the DB
+2. A "hybrid-cloud" like deployment to STACKIT using Hashicorp Vault for Column-Level-Encryptrion inside the DB
+
 Infrastructure provisioning is managed through Terraform scripts.
 
 #### Terraform Variables

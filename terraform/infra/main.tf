@@ -9,7 +9,7 @@ module "database" {
 }
 
 module "k8s" {
-    source = "./stackit_k8s"
+    source = "./main_k8s"
     stackit_project_id = var.stackit_project_id
     stackit_region = var.stackit_region
 }
