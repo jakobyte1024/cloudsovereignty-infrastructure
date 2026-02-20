@@ -15,6 +15,11 @@ There are multiple demo deployments:
     cp .env.vault.example .env
     docker compose -f docker-compose.vault.yml up -d
     ```
+    Before any encryption or decryption Hashicorp Vault needs to be setup in the UI:
+    
+    1. Go to [http://localhost:8200](http://localhost:8200/)
+    2. Login with ``myroot`` as token
+    3. Create a new ``transit`` provider
 
 2. Partially local using STACKIT KMS as a KMS.  
     To run this variant run the following command to copy the example env file so it is actually used.

@@ -12,11 +12,11 @@ resource "helm_release" "manufacturer_domain" {
   set_sensitive = [
     {
       name  = "app.dbconfig.user"
-      value = data.terraform_remote_state.infra.outputs.manufacturer_dbuser
+      value = data.terraform_remote_state.infrastructure.outputs.manufacturer_dbuser
     },
     {
       name  = "app.dbconfig.password"
-      value = data.terraform_remote_state.infra.outputs.manufacturer_dbpassword
+      value = data.terraform_remote_state.infrastructure.outputs.manufacturer_dbpassword
     }
   ]
 
@@ -27,11 +27,11 @@ resource "helm_release" "manufacturer_domain" {
     },
     {
       name  = "app.dbconfig.host"
-      value = data.terraform_remote_state.infra.outputs.dbhost
+      value = data.terraform_remote_state.infrastructure.outputs.dbhost
     },
     {
       name  = "app.dbconfig.port"
-      value = data.terraform_remote_state.infra.outputs.dbport
+      value = data.terraform_remote_state.infrastructure.outputs.dbport
       type  = "string" # needed to ensure port is treated as string
     },
     {
@@ -40,7 +40,23 @@ resource "helm_release" "manufacturer_domain" {
     },
     {
       name  = "app.dbconfig.name"
-      value = data.terraform_remote_state.infra.outputs.manufacturer_dbname
+      value = data.terraform_remote_state.infrastructure.outputs.manufacturer_dbname
+    },
+    {
+      name  = "app.appconfig.ENCRYPTIONPROXY_ENCRYPTION_URL"
+      value = "http://encryptionproxy-service/api/v1/encrypt"
+    },
+    {
+      name  = "app.appconfig.ENCRYPTIONPROXY_DECRYPTION_URL"
+      value = "http://encryptionproxy-service/api/v1/decrypt"
+    },
+    {
+      name  = "app.appconfig.KEK_PROVIDER_BOM"
+      value = "vault"
+    },
+    {
+      name  = "app.appconfig.KEK_KEYNAME_BOM"
+      value = "kek"
     }
   ]
 }

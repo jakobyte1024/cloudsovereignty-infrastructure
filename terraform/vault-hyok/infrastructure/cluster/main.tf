@@ -2,7 +2,7 @@ resource "stackit_ske_cluster" "main_cluster" {
   project_id             = var.stackit_project_id
   region                 = var.stackit_region
   kubernetes_version_min = "1.34.3"
-  name                   = "main"
+  name                   = "hyok-main"
   node_pools = [
     {
       name               = "default-pool"

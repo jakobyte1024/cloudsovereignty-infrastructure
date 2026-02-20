@@ -27,5 +27,5 @@ resource "stackit_ske_kubeconfig" "main_cluster_kubeconfig" {
 
 resource "local_sensitive_file" "kube_config" {
   content  = stackit_ske_kubeconfig.main_cluster_kubeconfig.kube_config
-  filename = "${path.root}/../../kubeconfig-main.yaml"
+  filename = "${path.root}/../kubeconfig-main.yaml"
 }

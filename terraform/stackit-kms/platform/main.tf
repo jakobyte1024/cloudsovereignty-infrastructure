@@ -1,5 +1,5 @@
 locals {
-  workspace_root = "${path.module}/../../../.."
+  workspace_root = "${path.root}/../../../.."
 }
 
 data "terraform_remote_state" "infrastructure" {

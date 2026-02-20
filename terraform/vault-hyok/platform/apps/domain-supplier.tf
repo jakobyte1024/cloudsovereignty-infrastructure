@@ -12,11 +12,11 @@ resource "helm_release" "supplier_domain" {
   set_sensitive = [
     {
       name  = "app.dbconfig.user"
-      value = data.terraform_remote_state.infra.outputs.supplier_dbuser
+      value = data.terraform_remote_state.infrastructure.outputs.supplier_dbuser
     },
     {
       name  = "app.dbconfig.password"
-      value = data.terraform_remote_state.infra.outputs.supplier_dbpassword
+      value = data.terraform_remote_state.infrastructure.outputs.supplier_dbpassword
     }
   ]
 
@@ -27,11 +27,11 @@ resource "helm_release" "supplier_domain" {
     },
     {
       name  = "app.dbconfig.host"
-      value = data.terraform_remote_state.infra.outputs.dbhost
+      value = data.terraform_remote_state.infrastructure.outputs.dbhost
     },
     {
       name  = "app.dbconfig.port"
-      value = data.terraform_remote_state.infra.outputs.dbport
+      value = data.terraform_remote_state.infrastructure.outputs.dbport
       type  = "string" # needed to ensure port is treated as string
     },
     {
@@ -40,7 +40,7 @@ resource "helm_release" "supplier_domain" {
     },
     {
       name  = "app.dbconfig.name"
-      value = data.terraform_remote_state.infra.outputs.supplier_dbname
+      value = data.terraform_remote_state.infrastructure.outputs.supplier_dbname
     }
   ]
 }

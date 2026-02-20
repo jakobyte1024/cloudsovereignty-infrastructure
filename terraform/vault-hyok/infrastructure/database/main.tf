@@ -1,6 +1,7 @@
 resource "stackit_postgresflex_instance" "main" {
   project_id      = var.stackit_project_id
-  name            = "main"
+  region          = var.stackit_region
+  name            = "hyok-db"
   acl             = ["0.0.0.0/0"] # Allow connections from any IP (for demo purposes)
   backup_schedule = "00 00 * * *"
   flavor = {
@@ -16,21 +17,21 @@ resource "stackit_postgresflex_instance" "main" {
 }
 
 resource "stackit_postgresflex_user" "manufacturer_domain" {
-  project_id      = var.stackit_project_id
+  project_id  = var.stackit_project_id
   instance_id = stackit_postgresflex_instance.main.instance_id
   username    = "manufacturer_user"
   roles       = ["login"]
 }
 
 resource "stackit_postgresflex_user" "order_domain" {
-  project_id      = var.stackit_project_id
+  project_id  = var.stackit_project_id
   instance_id = stackit_postgresflex_instance.main.instance_id
   username    = "order_user"
   roles       = ["login"]
 }
 
 resource "stackit_postgresflex_user" "supplier_domain" {
-  project_id      = var.stackit_project_id
+  project_id  = var.stackit_project_id
   instance_id = stackit_postgresflex_instance.main.instance_id
   username    = "supplier_user"
   roles       = ["login"]
@@ -55,4 +56,4 @@ resource "stackit_postgresflex_database" "supplier_domain" {
   project_id  = var.stackit_project_id
   name        = "supplierdomain-db"
   owner       = stackit_postgresflex_user.supplier_domain.username
-} 
+}
