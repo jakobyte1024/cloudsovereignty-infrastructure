@@ -4,7 +4,7 @@ This terraform script deploys the cloudsovereignty showcase with column-level-en
 
 It should demonstrate how HYOK could work but to make it easier to run it runs two K8s clusters on STACKIT.
 The first cluster hosts the applications like in the ``stackit-kms`` example.
-The second cluster hosts only a single Hashicorp Vault instance where the first one sends its requests for en- and decryption to.
+The second cluster hosts a Hashicorp Vault and the Encryption-Proxy instance where the first one sends its requests for en- and decryption to.
 
 Run the following commands to start everything up:
 
@@ -22,4 +22,4 @@ Run the following commands to start everything up:
 
 # Architecture
 
-![Architecture Diagram](../../images/architecture-hyok.png)
+![Architecture Diagram](../../images/architecture-hyok-2.png)
