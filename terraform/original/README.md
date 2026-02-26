@@ -1,6 +1,6 @@
-# Cloud-sovereignty showcase STACKIT KMS
+# Cloud-sovereignty showcase original
 
-This terraform script deploys the cloudsovereignty showcase with column-level-encryption using keys from the STACKIT KMS
+This terraform script deploys the cloudsovereignty showcase without column-level-encryption
 
 Run the following commands to start everything up:
 
@@ -15,7 +15,3 @@ Run the following commands to start everything up:
 
 6. Run `terraform init` to initialize the workspace.
 7. Run `terraform apply` to deploy the applications.
-
-# Architecture
-
-![Architecture Diagram](../../images/architecture-cloud-only.png)

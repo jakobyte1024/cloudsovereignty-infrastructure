@@ -1,7 +1,7 @@
 resource "stackit_ske_cluster" "main_cluster" {
   project_id             = var.stackit_project_id
   region                 = var.stackit_region
-  kubernetes_version_min = "1.34.3"
+  kubernetes_version_min = "1.34.4"
   name                   = "hyok-main"
   node_pools = [
     {
@@ -11,7 +11,7 @@ resource "stackit_ske_cluster" "main_cluster" {
       maximum            = "1"
       volume_size        = "25"
       volume_type        = "storage_premium_perf0"
-      availability_zones = ["eu01-3"]
+      availability_zones = ["eu01-1"]
     }
   ]
 }
