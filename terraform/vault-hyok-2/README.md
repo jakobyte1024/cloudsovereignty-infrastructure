@@ -22,4 +22,4 @@ Run the following commands to start everything up:
 
 # Architecture
 
-![Architecture Diagram](../../images/architecture-hyok.png)
+![Architecture Diagram](../../images/architecture-hyok-2.png)

@@ -1,7 +1,7 @@
 resource "stackit_ske_cluster" "local_cluster" {
   project_id             = var.stackit_project_id
   region                 = var.stackit_region
-  kubernetes_version_min = "1.34.4"
+  kubernetes_version_min = "1.35.3"
   name                   = "hyok-local"
   node_pools = [
     {
